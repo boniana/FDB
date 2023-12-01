@@ -1,0 +1,87 @@
+import tkinter as tk
+from models.entitys import Venda
+from datetime import datetime
+
+class CreateVenda(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.vendaController = self.controller.myController.vendaController()
+        
+        self.chassi_var = tk.StringVar()
+        self.cpfVendedor_var = tk.StringVar()
+        self.cpfComprador_var = tk.StringVar()
+        self.preco_var = tk.StringVar()
+        self.data_var = tk.StringVar()
+        
+                
+        tk.Label(self, text="Cadastro de Venda", font=("Helvetica", 16)).grid(row=0, column=0, columnspan=2, pady=10, sticky="w")
+
+        tk.Label(self, text="Chassi", anchor="w").grid(row=1, column=0, padx=10, pady=5, sticky="w")
+        tk.Entry(self, textvariable=self.chassi_var, width=30 ).grid(row=1, column=1, padx=10, pady=5)
+
+        tk.Label(self, text="CPF do Vendedor", anchor="w").grid(row=2, column=0, padx=10, pady=5, sticky="w")
+        tk.Entry(self, textvariable=self.cpfVendedor_var, width=30 ).grid(row=2, column=1, padx=10, pady=5)
+
+        tk.Label(self, text="CPF do Comprador:", anchor="w").grid(row=3, column=0, padx=10, pady=5, sticky="w")
+        tk.Entry(self, textvariable=self.cpfComprador_var, width=30 ).grid(row=3, column=1, padx=10, pady=5)
+
+        tk.Label(self, text="preco:", anchor="w").grid(row=4, column=0, padx=10, pady=5, sticky="w")
+        tk.Entry(self, textvariable=self.preco_var, width=30 ).grid(row=4, column=1, padx=10, pady=5)
+
+        tk.Label(self, text="data", anchor="w").grid(row=5, column=0, padx=10, pady=5, sticky="w")
+        tk.Entry(self, textvariable=self.data_var, width=30 ).grid(row=5, column=1, padx=10, pady=5)
+
+        tk.Button(self, text="Cadastrar", command=self.cadastrar_venda, width=25 ).grid(row=6, column=0, columnspan=4, pady=3)
+        tk.Button(self, text="Voltar para a página inicial", command=lambda: controller.show_frame(controller.first), width=25).grid(row=7, column=0, columnspan=4, pady=10)
+
+    def cadastrar_venda(self):
+        try:
+            chassi = self.chassi_var.get()
+            cpfVendedor = self.cpfVendedor_var.get()
+            cpfComprador = self.cpfComprador_var.get()
+            preco = self.preco_var.get()
+            data = self.data_var.get()
+            
+            if cpfComprador == cpfVendedor:
+                raise Exception("O comprador não pode ser o mesmo que o vendedor!")
+            
+            carro = self.controller.myController.veiculoController().get(chassi)
+            if not carro:
+                raise Exception("Veículo não encontrado!")
+            
+            vendedor = self.controller.myController.pessoaController().get(cpfVendedor)
+            if not vendedor:
+                raise Exception("Vendedor não encontrado!")
+            
+            if carro.cpfProprietario != cpfVendedor:
+                raise Exception("O vendedor não é o proprietário do veículo!")
+            
+            comprador = self.controller.myController.pessoaController().get(cpfComprador)
+            if not comprador:
+                raise Exception("Comprador não encontrado!")
+            
+            data = datetime.strptime(data, "%d-%m-%Y")
+            preco = float(preco)
+            
+            venda = Venda(
+                numeroChassi = chassi,
+                cpfVendedor = cpfVendedor,
+                cpfCompra = cpfComprador,
+                preco = preco,
+                data = data
+            )
+            
+            if not self.vendaController.create(venda):
+                raise Exception("Vou me Matar")
+            
+            tk.messagebox.showinfo("Sucesso", "Venda cadastrada" )
+            
+            self.chassi_var.set("")
+            self.cpfVendedor_var.set("")
+            self.cpfComprador_var.set("")
+            self.preco_var.set("")
+            self.data_var.set("")
+            
+        except Exception as e:
+            tk.messagebox.showerror("Erro", e )
