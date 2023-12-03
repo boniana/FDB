@@ -63,11 +63,11 @@ class Veiculo(Base):
 class Venda(Base):
     __tablename__ = 'venda'
     idVenda = Column(Integer, primary_key=True, autoincrement=True)
-    numeroChassi = Column(String(17), ForeignKey('veiculo.numeroChassi'))
+    numeroChassi = Column(String(17), ForeignKey('veiculo.numeroChassi'), nullable=False)
     veiculo = relationship('Veiculo', foreign_keys=[numeroChassi], backref=backref('vendas', cascade='all, delete-orphan'))
-    cpfVendedor = Column(String(11), ForeignKey('pessoa.cpf'))
+    cpfVendedor = Column(String(11), ForeignKey('pessoa.cpf'), nullable=False)
     vendedor = relationship('Pessoa', foreign_keys=[cpfVendedor])
-    cpfCompra = Column(String(11), ForeignKey('pessoa.cpf'))
+    cpfCompra = Column(String(11), ForeignKey('pessoa.cpf'), nullable=False)
     comprador = relationship('Pessoa', foreign_keys=[cpfCompra])
     preco = Column(Float, nullable=False)
     data = Column(Date, nullable=False)
