@@ -21,7 +21,7 @@ class getPessoaApp(tk.Frame):
             if not pessoa:
                 raise Exception("Pessoa não encontrada!")
             
-            tk.messagebox.showinfo("Sucesso", f"Nome: {pessoa.nome}\nCPF: {pessoa.cpf}\nEndereço: {pessoa.endereco}\nEstado Civil: {pessoa.estadoCivil}\n { "Cpf Conjuge: " +pessoa.cpfConjuge  if pessoa.cpfConjuge != None else ""}" )
+            tk.messagebox.showinfo("Sucesso", f"Nome: {pessoa.nome}\nCPF: {pessoa.cpf}\nEndereço: {pessoa.endereco}\nEstado Civil: {pessoa.estadoCivil}\n { 'Cpf Conjuge: ' +pessoa.cpfConjuge  if pessoa.cpfConjuge != None else ''}" )
         except Exception as e:
             tk.messagebox.showerror("Erro", e)
             

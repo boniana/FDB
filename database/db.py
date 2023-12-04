@@ -58,6 +58,7 @@ class Session:
             self.engine.connect().commit()
         except Exception as e:
             print(e)   
+
             
     def add_procedure_conjuge(self):
         procedure_sql = text("""
@@ -74,7 +75,7 @@ class Session:
         self.engine.connect().execute(text("DROP PROCEDURE IF EXISTS add_conjuge;"))
         self.engine.connect().execute(procedure_sql)
         self.engine.connect().execute(text("GRANT EXECUTE ON PROCEDURE trabalhofbd.add_conjuge TO 'root'@'localhost';"))
-        self.engine.connect().commit()         
+        self.engine.connect().commit()
     
     def add_trigger_after_insert_pessoa(self):
         trigger_sql = text("""
@@ -119,7 +120,8 @@ class Session:
         self.engine.connect().execute(text("DROP TRIGGER IF EXISTS before_update_venda;"))
         self.engine.connect().execute(trigger_sql)
         self.engine.connect().commit()
-        
+
+
     def add_trigger_insert_venda(self):
         trigger_sql = text("""
             CREATE TRIGGER before_insert_venda
@@ -147,6 +149,6 @@ class Session:
         self.engine.connect().execute(trigger_sql)
         self.engine.connect().commit()
 
-
+    
 
 

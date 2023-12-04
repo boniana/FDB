@@ -18,7 +18,7 @@ class HomeModelo(tk.Frame):
                             command=lambda: controller.show_frame(DeleteModelo), width= 30).grid(row=2, column=0, padx=5, pady=4)
         tk.Button(self, text="Buscar Modelo",
                             command=lambda: controller.show_frame(GetModelo), width= 30).grid(row=3, column=0, padx=5, pady=4)
-        tk.Button(self, text="Buscar Modelos",
+        tk.Button(self, text="Listar Modelos",
                             command=lambda: controller.show_frame(GetAllModelo), width= 30).grid(row=4, column=0, padx=5, pady=4)
         tk.Button(self, text="Atualizar Modelo",
                             command=lambda: controller.show_frame(UpdateModelo), width= 30).grid(row=5, column=0, padx=5, pady=4)

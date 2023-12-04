@@ -1,5 +1,5 @@
 from controllers.Controller import Controller
-from models.entitys import Pessoa, Venda, Veiculo, Modelo, Marca, Telefone
+from models.entitys import Pessoa, Veiculo, Modelo, Marca, Telefone
 from faker import Faker
 
 def create_dados():

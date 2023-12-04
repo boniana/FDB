@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from controllers.Controller import Controller
 
 class deletePessoaApp(tk.Frame):
     def __init__(self, parent, controller):
@@ -20,15 +19,23 @@ class deletePessoaApp(tk.Frame):
         
         
     def deletar_pessoa(self):
-        cpf = self.cpf_var.get()
-        pessoa = self.pessoaController.get(cpf)
-        if pessoa:
-            self.pessoaController.delete(pessoa)
-            messagebox.showinfo("Sucesso", "Pessoa deletada com sucesso!")
-        else:
-            messagebox.showerror("Erro", "Pessoa não encontrada!")
+        try:
+            cpf = self.cpf_var.get()
+            pessoa = self.pessoaController.get(cpf)
+            if pessoa:
+                d = self.pessoaController.delete(pessoa) 
+                if d != "Deletado com sucesso!":
+                    raise Exception(d)
+                messagebox.showinfo("Sucesso", "Pessoa deletada com sucesso!")
+                self.cpf_var.set("")
+            else:
+                raise Exception("Pessoa não encontrada!")
         
-        self.cpf_var.set("")
+        except Exception as e:
+            messagebox.showerror("Erro", e)
+        
+        
+       
 
 if __name__ == "__main__":
     root = tk.Tk()

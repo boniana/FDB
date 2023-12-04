@@ -11,9 +11,8 @@ class Pessoa(Base):
     nome = Column(String(100), nullable=False)
     estadoCivil = Column(String(20))
     endereco = Column(String(100), nullable=False)
-    cpfConjuge = Column(String(11), ForeignKey('pessoa.cpf'))
-    conjuge = relationship('Pessoa', foreign_keys=[cpfConjuge])
-    mysql_engine = 'myisam'
+    cpfConjuge = Column(String(11), ForeignKey('pessoa.cpf', ondelete='SET NULL'))
+    conjuge = relationship('Pessoa', foreign_keys=[cpfConjuge] )
 
     def __repr__(self):
         return f'Pessoa(cpf={self.cpf}, nome={self.nome}, estadoCivil={self.estadoCivil}, endereco={self.endereco}, cpfConjuge={self.cpfConjuge})'
@@ -65,9 +64,9 @@ class Venda(Base):
     idVenda = Column(Integer, primary_key=True, autoincrement=True)
     numeroChassi = Column(String(17), ForeignKey('veiculo.numeroChassi'), nullable=False)
     veiculo = relationship('Veiculo', foreign_keys=[numeroChassi], backref=backref('vendas', cascade='all, delete-orphan'))
-    cpfVendedor = Column(String(11), ForeignKey('pessoa.cpf'), nullable=False)
+    cpfVendedor = Column(String(11), ForeignKey('pessoa.cpf', ondelete="SET NULL"))
     vendedor = relationship('Pessoa', foreign_keys=[cpfVendedor])
-    cpfCompra = Column(String(11), ForeignKey('pessoa.cpf'), nullable=False)
+    cpfCompra = Column(String(11), ForeignKey('pessoa.cpf', ondelete="SET NULL"))
     comprador = relationship('Pessoa', foreign_keys=[cpfCompra])
     preco = Column(Float, nullable=False)
     data = Column(Date, nullable=False)

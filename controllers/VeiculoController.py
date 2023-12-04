@@ -31,6 +31,12 @@ class VeiculoController:
             return self.session.query(Veiculo).all()
         except Exception as e:
             return None
+    
+    def getVeiculoByCPF(self, cpf):
+        try:
+            return self.session.query(Veiculo).filter_by(cpfProprietario=cpf).all()
+        except Exception as e:
+            return None
         
     def delete(self, veiculo):
         try:

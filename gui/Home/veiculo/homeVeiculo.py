@@ -5,6 +5,7 @@ from gui.Home.veiculo.deleteVeiculo import DeleteVeiculo
 from gui.Home.veiculo.getVeiculo import GetVeiculo
 from gui.Home.veiculo.getAllVeiculo import GetAllVeiculo
 from gui.Home.veiculo.maisVendidos import MaisVendidos
+from gui.Home.veiculo.getVeiculoByCpf import GetVeiculoByCpf
 
 class HomeVeiculo(tk.Frame):
     def __init__(self, parent, controller):
@@ -19,7 +20,7 @@ class HomeVeiculo(tk.Frame):
         tk.Button(self, text="Buscar Veículo", 
                             command=lambda: controller.show_frame(GetVeiculo), width= 30).grid(row=2, column=0, padx=5, pady=4)
         
-        tk.Button(self, text="Buscar Veículos",
+        tk.Button(self, text="Listar Veículos",
                             command=lambda: controller.show_frame(GetAllVeiculo), width= 30).grid(row=3, column=0, padx=5, pady=4)
         
         tk.Button(self, text="Deletar Veículo",	
@@ -31,7 +32,10 @@ class HomeVeiculo(tk.Frame):
         tk.Button(self, text="Veículos mais vendidos",
                             command=lambda: controller.show_frame(MaisVendidos), width= 30).grid(row=6, column=0, padx=5, pady=4)
         
+        tk.Button(self, text="Buscar Veículo por CPF",
+                            command=lambda: controller.show_frame(GetVeiculoByCpf), width= 30).grid(row=7, column=0, padx=5, pady=4)
+        
         tk.Button(self, text="Voltar para a página inicial",
-                            command=lambda: self.controller.show_frame(self.controller.first)).grid(row=7, column=0, padx=5, pady=4)
+                            command=lambda: self.controller.show_frame(self.controller.first)).grid(row=8, column=0, padx=5, pady=4)
         
         

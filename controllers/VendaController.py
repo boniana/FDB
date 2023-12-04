@@ -19,6 +19,12 @@ class VendaController:
         except Exception as e:
             return None
         
+    def getAll(self):
+        try:
+            return self.session.query(Venda).all()
+        except Exception as e:
+            return None
+        
     def delete(self, venda):
         try:
             self.session.delete(venda)
@@ -35,10 +41,4 @@ class VendaController:
             return "Atualizado com sucesso!"
         except Exception as e:
             self.session.rollback()
-            return None
-        
-    def getVendasVeiculo(self, chassi):
-        try:
-            return self.session.query(Venda).filter_by(numeroChassi=chassi).all()
-        except Exception as e:
             return None
